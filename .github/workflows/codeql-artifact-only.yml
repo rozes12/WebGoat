@@ -1,14 +1,3 @@
-# For most projects, this workflow file will not need changing; you simply need
-# to commit it to your repository.
-#
-# You may wish to alter this file to override the set of languages analyzed,
-# or to provide custom queries or build logic.
-#
-# ******** NOTE ********
-# We have attempted to detect the languages in your repository. Please check
-# the `language` matrix defined below to confirm you have the correct set of
-# supported CodeQL languages.
-#
 name: "CodeQL Advanced - Artifact Only"
 
 on:
@@ -19,14 +8,10 @@ on:
         required: true
         type: string
         default: 'main'
+
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    # Runner size impacts CodeQL analysis time. To learn more, please see:
-    #   - https://gh.io/recommended-hardware-resources-for-running-codeql
-    #   - https://gh.io/supported-runners-and-hardware-resources
-    #   - https://gh.io/using-larger-runners (GitHub.com only)
-    # Consider using larger runners or machines with greater resources for possible analysis time improvements.
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     permissions:
       security-events: write
@@ -47,41 +32,34 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        # --- START: Modified for on-demand runs ---
-        # For manual runs (workflow_dispatch), checkout the branch specified in the input.
-        # For other events (push, pull_request, schedule), the action will
-        # automatically checkout the correct ref.
         ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.branch }}
-        # --- END: Modified for on-demand runs ---
 
-    # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
-        # queries: security-extended,security-and-quality
 
-    # Build step for compiled languages
     - if: matrix.build-mode == 'manual'
       shell: bash
       run: |
-        echo 'If you are using a "manual" build mode for one or more of the' \
-          'languages you are analyzing, replace this with the commands to build' \
-          'your code, for example:'
-        echo '  make bootstrap'
-        echo '  make release'
+        echo 'If you are using a "manual" build mode, replace this with your build commands.'
         exit 1
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
+      id: codeql_analysis # Keep the ID to reference outputs
       with:
         category: "/language:${{matrix.language}}"
         upload: false
-      id: codeql_analysis
+        # Specify a directory for the SARIF results.
+        # This is required when 'upload: false' is set.
+        output: ${{ runner.temp }}/codeql-results
 
     - name: Upload CodeQL SARIF report as artifact
       uses: actions/upload-artifact@v4
       with:
+        # The name of the artifact, unique for each language
         name: CodeQL-SARIF-Report-${{ matrix.language }}
+        # The path to the file to upload, which is now correctly populated
         path: ${{ steps.codeql_analysis.outputs.sarif-filepath }}
