@@ -48,12 +48,10 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
-      id: codeql_analysis # Keep the ID to reference outputs
       with:
         category: "/language:${{matrix.language}}"
         upload: false
-        # Specify a directory for the SARIF results.
-        # This is required when 'upload: false' is set.
+        # This correctly tells CodeQL where to save the SARIF file.
         output: ${{ runner.temp }}/codeql-results
 
     - name: Upload CodeQL SARIF report as artifact
@@ -61,5 +59,6 @@ jobs:
       with:
         # The name of the artifact, unique for each language
         name: CodeQL-SARIF-Report-${{ matrix.language }}
-        # The path to the file to upload, which is now correctly populated
-        path: ${{ steps.codeql_analysis.outputs.sarif-filepath }}
+        # Instead of using the output variable, we point directly to the
+        # directory where we know the results were saved.
+        path: ${{ runner.temp }}/codeql-results/
