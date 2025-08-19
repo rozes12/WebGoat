@@ -54,14 +54,18 @@ public class DatabaseConfiguration {
 
   @Bean
   public Function<String, Flyway> flywayLessons() {
-    return schema ->
-        Flyway.configure()
-            .configuration(Map.of("driver", properties.getDriverClassName()))
-            .schemas(schema)
-            .cleanDisabled(false)
-            .dataSource(dataSource())
-            .locations("lessons")
-            .load();
+    return schema -> {
+      if (!schema.matches("[a-zA-Z0-9]+")) {
+        throw new IllegalArgumentException("Invalid schema name");
+      }
+      return Flyway.configure()
+          .configuration(Map.of("driver", properties.getDriverClassName()))
+          .schemas(schema)
+          .cleanDisabled(false)
+          .dataSource(dataSource())
+          .locations("lessons")
+          .load();
+    };
   }
 
   @Bean

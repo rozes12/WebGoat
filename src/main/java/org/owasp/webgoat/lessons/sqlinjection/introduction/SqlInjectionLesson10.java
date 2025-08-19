@@ -46,7 +46,7 @@ public class SqlInjectionLesson10 implements AssignmentEndpoint {
 
   protected AttackResult injectableQueryAvailability(String action) {
     StringBuilder output = new StringBuilder();
-    String query = "SELECT * FROM access_log WHERE action LIKE '%" + action + "%'";
+    String query = "SELECT * FROM CONTAINER.access_log WHERE action LIKE '%" + action + "%'";
 
     try (Connection connection = dataSource.getConnection()) {
       try {
@@ -97,12 +97,12 @@ public class SqlInjectionLesson10 implements AssignmentEndpoint {
     try {
       Statement stmt =
           connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-      ResultSet results = stmt.executeQuery("SELECT * FROM access_log");
+      ResultSet results = stmt.executeQuery("SELECT * FROM CONTAINER.access_log");
       int cols = results.getMetaData().getColumnCount();
       return (cols > 0);
     } catch (SQLException e) {
       String errorMsg = e.getMessage();
-      if (errorMsg.contains("object not found: ACCESS_LOG")) {
+      if (errorMsg.contains("object not found: CONTAINER.ACCESS_LOG")) {
         return false;
       } else {
         return true;

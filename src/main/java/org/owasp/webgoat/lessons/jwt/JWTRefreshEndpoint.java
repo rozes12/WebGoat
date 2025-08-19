@@ -73,7 +73,9 @@ public class JWTRefreshEndpoint implements AssignmentEndpoint {
             .signWith(io.jsonwebtoken.SignatureAlgorithm.HS512, JWT_PASSWORD)
             .compact();
     Map<String, Object> tokenJson = new HashMap<>();
-    String refreshToken = RandomStringUtils.randomAlphabetic(20);
+        byte[] randomBytes = new byte[20];
+    new java.security.SecureRandom().nextBytes(randomBytes);
+    String refreshToken = java.util.Base64.getEncoder().encodeToString(randomBytes);
     validRefreshTokens.add(refreshToken);
     tokenJson.put("access_token", token);
     tokenJson.put("refresh_token", refreshToken);

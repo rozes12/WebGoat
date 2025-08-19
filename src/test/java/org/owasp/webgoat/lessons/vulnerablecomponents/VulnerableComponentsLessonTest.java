@@ -31,6 +31,7 @@ public class VulnerableComponentsLessonTest {
   @Test
   public void testTransformation() throws Exception {
     XStream xstream = new XStream();
+    xstream.allowTypes(new Class[] {Contact.class, ContactImpl.class});
     xstream.setClassLoader(Contact.class.getClassLoader());
     xstream.alias("contact", ContactImpl.class);
     xstream.ignoreUnknownElements();

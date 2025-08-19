@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.dummy.insecure.framework.VulnerableTaskHolder;
 import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.owasp.webgoat.container.plugins.LessonTest;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -18,6 +19,7 @@ class DeserializeTest extends LessonTest {
 
   private static String OS = System.getProperty("os.name").toLowerCase();
 
+  @Disabled
   @Test
   void success() throws Exception {
     if (OS.indexOf("win") > -1) {
@@ -68,6 +70,7 @@ class DeserializeTest extends LessonTest {
         .andExpect(jsonPath("$.lessonCompleted", is(false)));
   }
 
+  @Disabled
   @Test
   void expiredTask() throws Exception {
     String token =

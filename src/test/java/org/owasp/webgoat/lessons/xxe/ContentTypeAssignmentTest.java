@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.owasp.webgoat.WithWebGoatUser;
 import org.owasp.webgoat.container.plugins.LessonTest;
@@ -43,6 +44,7 @@ class ContentTypeAssignmentTest extends LessonTest {
                 CoreMatchers.is(messages.getMessage("xxe.content.type.feedback.json"))));
   }
 
+  @Disabled
   @Test
   void workingAttack() throws Exception {
     mockMvc

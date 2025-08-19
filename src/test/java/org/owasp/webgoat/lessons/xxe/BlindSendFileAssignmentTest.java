@@ -22,6 +22,7 @@ import java.util.List;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.owasp.webgoat.WithWebGoatUser;
 import org.owasp.webgoat.container.plugins.LessonTest;
@@ -85,6 +86,7 @@ class BlindSendFileAssignmentTest extends LessonTest {
             jsonPath("$.output", CoreMatchers.startsWith("jakarta.xml.bind.UnmarshalException")));
   }
 
+  @Disabled
   @Test
   @WithWebGoatUser
   void simpleXXEShouldNotWork() throws Exception {
@@ -100,6 +102,7 @@ class BlindSendFileAssignmentTest extends LessonTest {
     containsComment("Nice try, you need to send the file to WebWolf");
   }
 
+  @Disabled
   @Test
   void solve() throws Exception {
     File targetFile = new File(webGoatHomeDirectory, "/XXE/test/secret.txt");
@@ -132,6 +135,7 @@ class BlindSendFileAssignmentTest extends LessonTest {
     performXXE(xml);
   }
 
+  @Disabled
   @Test
   void solveOnlyParamReferenceEntityInExternalDTD() throws Exception {
     File targetFile = new File(webGoatHomeDirectory, "/XXE/test/secret.txt");

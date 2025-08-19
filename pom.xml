@@ -105,7 +105,7 @@
     <webwolf.port>9090</webwolf.port>
     <wiremock.version>3.13.0</wiremock.version>
     <xml-resolver.version>1.2</xml-resolver.version>
-    <xstream.version>1.4.5</xstream.version>
+    <xstream.version>1.4.20</xstream.version>
     <!-- do not update necessary for lesson -->
     <zxcvbn.version>1.9.0</zxcvbn.version>
   </properties>
@@ -193,6 +193,11 @@
         <groupId>org.webjars</groupId>
         <artifactId>jquery</artifactId>
         <version>${jquery.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>jquery-form</artifactId>
+        <version>4.2.2</version>
       </dependency>
       <dependency>
         <groupId>org.webjars</groupId>
@@ -695,20 +700,12 @@
                     <argument>-Dwebgoat.user.directory=${java.io.tmpdir}/webgoat_${webgoat.port}</argument>
                     <argument>-Dspring.main.banner-mode=off</argument>
                     <argument>--enable-native-access=ALL-UNNAMED</argument>
-                    <argument>--add-opens</argument>
-                    <argument>java.base/java.lang=ALL-UNNAMED</argument>
-                    <argument>--add-opens</argument>
-                    <argument>java.base/java.util=ALL-UNNAMED</argument>
-                    <argument>--add-opens</argument>
-                    <argument>java.base/java.lang.reflect=ALL-UNNAMED</argument>
-                    <argument>--add-opens</argument>
-                    <argument>java.desktop/java.beans=ALL-UNNAMED</argument>
-                    <argument>--add-opens</argument>
-                    <argument>java.base/sun.nio.ch=ALL-UNNAMED</argument>
-                    <argument>--add-opens</argument>
-                    <argument>java.base/java.io=ALL-UNNAMED</argument>
-                    <argument>--add-opens</argument>
-                    <argument>java.base/java.util=ALL-UNNAMED</argument>
+                    <argument>--add-opens=java.base/java.lang=ALL-UNNAMED</argument>
+                    <argument>--add-opens=java.base/java.util=ALL-UNNAMED</argument>
+                    <argument>--add-opens=java.base/java.lang.reflect=ALL-UNNAMED</argument>
+                    <argument>--add-opens=java.desktop/java.beans=ALL-UNNAMED</argument>
+                    <argument>--add-opens=java.base/sun.nio.ch=ALL-UNNAMED</argument>
+                    <argument>--add-opens=java.base/java.io=ALL-UNNAMED</argument>
                     <argument>${project.build.directory}/webgoat-${project.version}.jar</argument>
                   </arguments>
                   <waitForInterrupt>false</waitForInterrupt>

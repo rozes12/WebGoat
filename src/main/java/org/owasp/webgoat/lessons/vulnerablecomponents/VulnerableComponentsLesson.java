@@ -24,6 +24,8 @@ public class VulnerableComponentsLesson implements AssignmentEndpoint {
   @PostMapping("/VulnerableComponents/attack1")
   public @ResponseBody AttackResult completed(@RequestParam String payload) {
     XStream xstream = new XStream();
+        xstream.denyTypesByWildcard(new String[] {"**"});
+    xstream.allowTypes(new Class[] {Contact.class, ContactImpl.class});
     xstream.setClassLoader(Contact.class.getClassLoader());
     xstream.alias("contact", ContactImpl.class);
     xstream.ignoreUnknownElements();

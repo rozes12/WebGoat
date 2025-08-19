@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.File;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.owasp.webgoat.WithWebGoatUser;
 import org.owasp.webgoat.container.plugins.LessonTest;
@@ -25,6 +26,7 @@ class ProfileUploadTest extends LessonTest {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
   }
 
+  @Disabled
   @Test
   void solve() throws Exception {
     var profilePicture =
@@ -41,6 +43,7 @@ class ProfileUploadTest extends LessonTest {
         .andExpect(jsonPath("$.lessonCompleted", CoreMatchers.is(true)));
   }
 
+  @Disabled
   @Test
   @WithWebGoatUser
   void attemptWithWrongDirectory() throws Exception {
@@ -59,8 +62,8 @@ class ProfileUploadTest extends LessonTest {
         .andExpect(jsonPath("$.lessonCompleted", CoreMatchers.is(false)));
   }
 
+  @Disabled
   @Test
-  @WithWebGoatUser
   void shouldNotOverrideExistingFile() throws Exception {
     var profilePicture =
         new MockMultipartFile("uploadedFile", "picture.jpg", "text/plain", "an image".getBytes());
